@@ -1,8 +1,18 @@
-# $a = 5
-# $b = Get-Process | Select-Object -First $a
-# Write-Host($b) 
+$logs = Get-Winevent -LogName system -MaxEvents 1000            # logs Windows events
+$logs |
+    Where-Object { $_.providername -EQ 'service control manager'} |
+    Select-Object TimeCreated,LevelDisplayName,Message
 
-# Write-Host(Get-Variable | Out-String -Stream | ForEach-Object { Write-Host $_ })
+$a = 2 | Get-Member
+$i = '5'
+$i + $i         # 55 since inferred type is string
 
-$logs = Get-Winevent -LogName system -MaxEvents 1000
-Write-Host($logs| Out-String -Stream | ForEach-Object { Write-Host $_ })
+[int32]$i = 10
+$i * 2          # Output: 20
+
+# [datetime]$d = "12/31/2022"
+# $d = "foo"      # Will throw an error
+
+# ------------------------------------------
+$name = "Jeff"
+'Hello, my name is $name'
